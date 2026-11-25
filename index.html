@@ -2,139 +2,191 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#090909">
-<meta name="description" content="SOULSIDE — твой маленький цифровой мир">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<meta name="description" content="SOULSIDE — маленький цифровой мир">
 <link rel="manifest" href="manifest.webmanifest">
 <title>SOULSIDE</title>
 <style>
-:root{--bg:#090909;--panel:rgba(20,20,20,.82);--panel2:#1b1b1b;--line:rgba(255,255,255,.11);--muted:#999;--white:#f7f7f7;--radius:25px}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050505;color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-body{min-height:100svh;display:flex;justify-content:center;overflow-x:hidden}
-button,input,textarea{font:inherit}button{color:inherit;cursor:pointer}
-.phone{position:relative;width:min(100%,480px);min-height:100svh;overflow:hidden;background:linear-gradient(145deg,#202020,#080808 52%,#151515);isolation:isolate}
-.wallpaper{position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at 25% 20%,#454545 0,transparent 36%),radial-gradient(ellipse at 80% 75%,#292929 0,transparent 40%),linear-gradient(145deg,#181818,#050505 65%,#242424);background-size:cover;background-position:center;transition:background .25s}
-.wallpaper:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.44))}
-.status{height:38px;padding:10px 23px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:650;letter-spacing:.2px;position:relative;z-index:3}
-.status-right{display:flex;gap:7px;align-items:center}.signal{font-size:13px}
-.screen{position:relative;min-height:calc(100svh - 38px);padding:18px 22px 30px;display:flex;flex-direction:column}
-.topline{display:flex;align-items:center;justify-content:space-between;margin:3px 0 23px}
-.brand{font-size:13px;letter-spacing:4px;font-weight:750}.avatar{width:35px;height:35px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:15px}
-.clock{font-size:clamp(48px,14vw,70px);font-weight:250;letter-spacing:-3px;line-height:1;margin:12px 0 4px}
-.date{font-size:13px;color:#d0d0d0;margin-bottom:34px}
-.widget{border:1px solid var(--line);background:rgba(15,15,15,.34);backdrop-filter:blur(22px);border-radius:21px;padding:14px 16px;margin-bottom:28px}
-.widget-head{display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.4px;color:#ddd}.widget p{font-size:13px;color:#c8c8c8;margin:9px 0 0;line-height:1.45}
-.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px 13px;margin-top:5px}
-.app{border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
-.app-icon{width:59px;height:59px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#f5f5f5,#bcbcbc);color:#111;font-size:25px;box-shadow:0 9px 22px #0007,inset 0 1px 0 #fff}
-.app:nth-child(2) .app-icon{background:linear-gradient(145deg,#353535,#111);color:#fff;border:1px solid #666}
-.app:nth-child(3) .app-icon{background:linear-gradient(145deg,#e7e7e7,#777);color:#111}
-.app:nth-child(4) .app-icon{background:linear-gradient(145deg,#292929,#050505);color:#fff;border:1px solid #555}
-.app:nth-child(5) .app-icon,.app:nth-child(6) .app-icon{background:rgba(255,255,255,.14);backdrop-filter:blur(18px);color:#fff;border:1px solid var(--line)}
-.app-name{font-size:11px;color:#f2f2f2;text-shadow:0 1px 5px #000;white-space:nowrap}
-.dock{margin-top:auto;display:flex;justify-content:center;gap:20px;padding:13px 16px;border:1px solid #ffffff1a;background:#ffffff18;backdrop-filter:blur(24px);border-radius:25px}
-.dock span{font-size:10px;color:#ddd}
-.home-indicator{width:108px;height:4px;border-radius:5px;background:#fff;opacity:.85;margin:17px auto 0}
-.view{display:none;position:absolute;inset:38px 0 0;background:#0b0b0b;z-index:5;overflow:auto;padding:18px 18px calc(25px + env(safe-area-inset-bottom))}
-.view.active{display:block;animation:rise .22s ease}
-@keyframes rise{from{opacity:.4;transform:translateY(8px)}to{opacity:1;transform:none}}
-.appbar{display:flex;align-items:center;gap:13px;margin:2px 0 22px}
-.back{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:#ffffff0c;font-size:20px}
-.appbar h2{font-size:20px;margin:0;font-weight:650;letter-spacing:-.4px}.sub{color:var(--muted);font-size:12px;margin-top:3px}
-.card{background:linear-gradient(145deg,#1c1c1c,#111);border:1px solid var(--line);border-radius:20px;padding:15px;margin:12px 0}
-.muted{color:var(--muted)}.small{font-size:12px}.post-head{display:flex;gap:10px;align-items:center}.mini-avatar{width:34px;height:34px;border-radius:50%;background:#333;display:grid;place-items:center}
-.post p{font-size:14px;line-height:1.5;color:#eee}.actions{display:flex;gap:19px;color:#aaa;font-size:12px;margin-top:12px}
-.chat-list{display:flex;flex-direction:column;gap:9px}.chat-row{display:flex;gap:12px;align-items:center;padding:12px;border-radius:17px;background:#171717;border:1px solid var(--line);text-align:left;width:100%}
-.bubble{max-width:84%;padding:12px 14px;border-radius:18px;background:#242424;font-size:14px;line-height:1.45;margin:9px 0}.bubble.mine{margin-left:auto;background:#ededed;color:#111;border-bottom-right-radius:6px}.bubble.theirs{border-bottom-left-radius:6px}
-.chat-area{display:flex;flex-direction:column;min-height:55vh}.composer{display:flex;gap:8px;margin-top:auto;padding-top:14px}.composer input{min-width:0;flex:1;background:#1b1b1b;border:1px solid var(--line);border-radius:22px;padding:12px 14px;color:#fff;outline:none}.send,.primary{border:0;background:#f1f1f1;color:#111;border-radius:20px;padding:0 17px;font-weight:650}
-.tile{border-radius:20px;background:#191919;border:1px solid var(--line);padding:16px;margin:12px 0}
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.photo-cell{aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#444,#111);overflow:hidden}.photo-cell img{width:100%;height:100%;object-fit:cover}
-input[type=file]{display:none}.upload{display:inline-flex;padding:11px 14px;border:1px solid var(--line);border-radius:15px;background:#1b1b1b;font-size:13px;margin:6px 0}
-.backdrop{background:#121212;border-radius:20px;padding:20px;text-align:center;border:1px solid var(--line)}
-.toast{position:fixed;top:48px;left:50%;transform:translateX(-50%);background:#eee;color:#111;padding:10px 16px;border-radius:20px;font-size:12px;z-index:10;display:none;box-shadow:0 8px 30px #0008}
-@media(min-width:520px){body{padding:20px 0}.phone{min-height:calc(100svh - 40px);border:1px solid #333;border-radius:36px}.screen{min-height:calc(100svh - 78px)}.view{inset:38px 0 0}}
+:root{--bg:#080808;--panel:#151515;--panel2:#1d1d1d;--line:#303030;--muted:#999;--text:#f5f5f5;--soft:#c9c9c9;--r:20px}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050505;color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}body{display:flex;justify-content:center;min-height:100svh}button,input,textarea{font:inherit}button{color:inherit;cursor:pointer}
+.phone{width:min(100%,520px);min-height:100svh;background:#090909;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.status{height:34px;flex:none;padding:8px 20px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:650;background:#090909}
+main{flex:1;min-height:0;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+.screen{display:none;min-height:calc(100svh - 106px);padding:12px 16px 24px;overflow:auto}.screen.active{display:block}
+.header{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 17px;position:sticky;top:0;background:#090909;z-index:3}
+.brand{font-size:14px;letter-spacing:4px;font-weight:800}.head-title{font-size:22px;font-weight:750;letter-spacing:-.5px}.sub{font-size:12px;color:var(--muted);margin-top:3px}
+.icon-btn{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:#151515;font-size:18px}
+.tabs{display:flex;gap:8px;overflow:auto;padding:0 0 12px;scrollbar-width:none}.tab{border:1px solid var(--line);border-radius:30px;background:#141414;color:#bbb;padding:8px 13px;font-size:12px;white-space:nowrap}.tab.active{background:#eee;color:#111;border-color:#eee}
+.card{background:linear-gradient(145deg,#191919,#111);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:10px 0}
+.post-top{display:flex;gap:10px;align-items:center}.avatar{width:42px;height:42px;border-radius:50%;background:#333;display:grid;place-items:center;overflow:hidden;flex:none;font-weight:700}.avatar img{width:100%;height:100%;object-fit:cover}.name{font-size:14px;font-weight:700}.handle{font-size:11px;color:var(--muted);margin-top:2px}.time{font-size:11px;color:#888;margin-left:auto;align-self:flex-start}
+.post-text{font-size:14px;line-height:1.55;color:#eee;white-space:pre-wrap;margin:13px 0}.post-image{width:100%;max-height:340px;object-fit:cover;border-radius:15px;margin:2px 0 8px}.actions{display:flex;gap:18px;border-top:1px solid #292929;padding-top:11px;margin-top:10px}.action{border:0;background:none;color:#aaa;font-size:12px;padding:2px}.action.liked{color:#fff}
+.composer textarea,.field, .composer input{width:100%;background:#101010;color:#fff;border:1px solid #343434;border-radius:14px;padding:12px;outline:none;resize:vertical}.composer textarea{min-height:78px}.primary{border:0;border-radius:22px;background:#eee;color:#111;font-weight:750;padding:10px 16px}.secondary{border:1px solid #444;border-radius:20px;background:#191919;padding:9px 13px;color:#ddd}
+.compose-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:9px}.file-label{font-size:12px;color:#ccc;padding:9px 12px;border:1px solid #393939;border-radius:18px}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,520px);height:calc(68px + env(safe-area-inset-bottom));padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;background:#101010ed;border-top:1px solid #292929;backdrop-filter:blur(18px);z-index:10}
+.nav{border:0;background:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;min-width:54px}.nav b{font-size:20px;font-weight:500}.nav.active{color:#fff}
+.profile-row{display:flex;gap:13px;align-items:center}.profile-big{width:68px;height:68px;border-radius:50%;background:#333;overflow:hidden;display:grid;place-items:center;font-size:24px}.profile-big img{width:100%;height:100%;object-fit:cover}
+.channel-row,.chat-row{display:flex;gap:11px;align-items:center;padding:12px;background:#171717;border:1px solid #303030;border-radius:16px;width:100%;text-align:left;margin:8px 0}
+.channel-row .avatar,.chat-row .avatar{width:43px;height:43px}
+.chat-view{display:none}.chat-view.active{display:block}.bubble{max-width:85%;padding:11px 13px;border-radius:17px;background:#242424;margin:8px 0;font-size:14px;line-height:1.5;white-space:pre-wrap}.bubble.mine{margin-left:auto;background:#eee;color:#111}.chat-input{display:flex;gap:8px;position:sticky;bottom:0;background:#090909;padding:10px 0}.chat-input input{flex:1;min-width:0}
+.scene{border:1px solid #3a3a3a;border-radius:18px;padding:16px;background:linear-gradient(145deg,#1b1b1b,#0e0e0e);margin:12px 0}.scene-label{font-size:10px;letter-spacing:2px;color:#aaa}.scene-text{font-size:15px;line-height:1.65;margin:12px 0}.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.photo-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px}
+.muted{color:var(--muted)}.tiny{font-size:11px}.section-title{font-size:16px;font-weight:750;margin:18px 0 8px}
+.home-hero{padding:18px;border-radius:22px;border:1px solid #333;background:radial-gradient(ellipse at 80% 0,#343434,transparent 55%),linear-gradient(145deg,#191919,#080808);margin:10px 0 18px}.home-hero h1{font-size:34px;letter-spacing:5px;margin:6px 0}.home-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.home-tile{padding:17px;border-radius:18px;background:#171717;border:1px solid #303030;text-align:left;min-height:90px}.home-tile strong{display:block;margin-top:10px}.home-tile span{font-size:22px}
+.empty{padding:20px;text-align:center;color:#888;font-size:13px}
+.toast{position:fixed;top:45px;left:50%;transform:translateX(-50%);background:#eee;color:#111;padding:10px 16px;border-radius:20px;z-index:20;font-size:12px;display:none;max-width:90%}
+dialog{border:1px solid #444;border-radius:20px;background:#151515;color:#fff;width:min(92%,460px);padding:18px}dialog::backdrop{background:#000b}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+@media(min-width:600px){body{padding:18px 0}.phone{min-height:calc(100svh - 36px);border:1px solid #333;border-radius:28px}.bottom{bottom:18px;border-radius:0 0 28px 28px}}
 </style>
 </head>
 <body>
 <div class="phone">
- <div class="wallpaper" id="wallpaper"></div>
- <div class="status"><span id="statusTime">9:41</span><span class="status-right"><span>●</span><span class="signal">▮▮▮</span><span>◔</span><span>▰</span></span></div>
- <main class="screen" id="home">
-  <div class="topline"><div class="brand">SOULSIDE</div><div class="avatar">✦</div></div>
-  <div class="clock" id="clock">9:41</div><div class="date" id="date">Среда, 25 ноября</div>
-  <div class="widget"><div class="widget-head"><span>ТВОЁ ПРОСТРАНСТВО</span><span>✧</span></div><p>Небольшой цифровой мир, который всегда под рукой.</p></div>
-  <div class="app-grid">
-   <button class="app" data-open="twitter"><span class="app-icon">𝕏</span><span class="app-name">Twitter</span></button>
-   <button class="app" data-open="telegram"><span class="app-icon">➤</span><span class="app-name">Telegram</span></button>
-   <button class="app" data-open="tiktok"><span class="app-icon">♪</span><span class="app-name">TikTok</span></button>
-   <button class="app" data-open="photos"><span class="app-icon">▧</span><span class="app-name">Photos</span></button>
-   <button class="app" data-open="events"><span class="app-icon">✧</span><span class="app-name">Events</span></button>
-   <button class="app" data-open="settings"><span class="app-icon">⚙</span><span class="app-name">Обои</span></button>
-  </div>
-  <div class="dock"><span>SOULSIDE</span><span>•</span><span>ТВОЙ МИР</span></div>
-  <div class="home-indicator"></div>
- </main>
-
- <section class="view" id="twitter">
-  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Twitter</h2><div class="sub">Твоя лента</div></div></div>
-  <div class="card post"><div class="post-head"><div class="mini-avatar">悟</div><div><b>Сугуру Гето</b><div class="muted small">@suguru · недавно</div></div></div><p>Иногда полезно просто остановиться и посмотреть, что происходит вокруг. Не каждый день должен быть наполнен важными событиями.</p><div class="actions"><span>♡ 24</span><span>◯ 5</span><span>↗ Поделиться</span></div></div>
-  <div class="card"><b>Написать публикацию</b><textarea id="tweetInput" placeholder="О чём думаешь?" style="width:100%;margin:12px 0;background:#111;border:1px solid #333;border-radius:14px;padding:12px;color:white;min-height:80px"></textarea><button class="primary" id="tweetPost" style="padding:10px 16px">Опубликовать</button></div>
-  <div id="tweets"></div>
- </section>
-
- <section class="view" id="telegram">
-  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Telegram</h2><div class="sub">Сообщения</div></div></div>
-  <button class="chat-row" id="openSuguru"><div class="mini-avatar">悟</div><div style="flex:1"><b>Сугуру Гето</b><div class="muted small">Последний раз недавно</div></div><span class="muted">›</span></button>
-  <div id="conversation" style="display:none">
-   <div class="appbar" style="margin-top:18px"><div class="mini-avatar">悟</div><div><b>Сугуру Гето</b><div class="sub">демо-переписка</div></div></div>
-   <div class="chat-area"><div id="messages"><div class="bubble theirs">Привет. Как проходит твой день?</div></div>
-    <div class="composer"><input id="messageInput" placeholder="Сообщение…"><button class="send" id="sendMessage">➤</button></div>
+ <div class="status"><span id="clock">9:41</span><span>● ▮▮▮ ◔ ▰</span></div>
+ <main>
+  <section class="screen active" id="home">
+   <div class="header"><span class="brand">SOULSIDE</span><button class="icon-btn" onclick="openScreen('profile')">✦</button></div>
+   <div class="home-hero"><div class="tiny muted">ТВОЁ ЦИФРОВОЕ ПРОСТРАНСТВО</div><h1>SOULSIDE</h1><div class="muted">Маленькие моменты большой истории.</div></div>
+   <div class="home-grid">
+    <button class="home-tile" onclick="openScreen('twitter')"><span>𝕏</span><strong>Twitter</strong><small class="muted">Мысли, мемы, наблюдения</small></button>
+    <button class="home-tile" onclick="openScreen('telegram')"><span>➤</span><strong>Telegram</strong><small class="muted">Личные сообщения и каналы</small></button>
+    <button class="home-tile" onclick="openScreen('events')"><span>✧</span><strong>События</strong><small class="muted">Неожиданные ситуации</small></button>
+    <button class="home-tile" onclick="openScreen('photos')"><span>▧</span><strong>Photos</strong><small class="muted">Твоя галерея</small></button>
    </div>
-  </div>
- </section>
+   <div class="section-title">Сейчас в SOULSIDE</div><div class="card" id="homeNotice">Лента обновляется, пока ты здесь. Загляни к персонажам.</div>
+  </section>
 
- <section class="view" id="tiktok">
-  <div class="appbar"><button class="back" data-home>‹</button><div><h2>TikTok</h2><div class="sub">Короткие видео · демо</div></div></div>
-  <div class="backdrop" style="min-height:58vh;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 50% 35%,#555,#151515 65%)"><div style="font-size:60px">♪</div><h2>Твоя лента</h2><p class="muted">Здесь позже появятся короткие видео персонажей и друзей.</p><span class="small muted">SOULSIDE · FOR YOU</span></div>
- </section>
+  <section class="screen" id="twitter">
+   <div class="header"><div><div class="head-title">Twitter</div><div class="sub">Публичные мысли и повседневность</div></div><button class="icon-btn" onclick="openScreen('profile')">◉</button></div>
+   <div class="composer card"><textarea id="postText" placeholder="Что у тебя на уме?"></textarea><div class="compose-row"><label class="file-label">＋ Фото<input id="postPhoto" type="file" accept="image/*" hidden></label><span id="photoName" class="tiny muted"></span><button class="primary" style="margin-left:auto" onclick="createPost()">Опубликовать</button></div></div>
+   <div class="tabs"><button class="tab active" data-feed="all">Для тебя</button><button class="tab" data-feed="people">Люди</button><button class="tab" data-feed="mine">Мои посты</button></div>
+   <div id="feed"></div>
+  </section>
 
- <section class="view" id="photos">
-  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Photos</h2><div class="sub">Твоя галерея</div></div></div>
-  <label class="upload">＋ Добавить фотографии<input type="file" id="photoUpload" accept="image/*" multiple></label>
-  <div class="photo-grid" id="photoGrid"></div><p class="muted small">Выбранные изображения хранятся в этой версии на устройстве, пока данные браузера не очищены.</p>
- </section>
+  <section class="screen" id="telegram">
+   <div class="header"><div><div class="head-title">Telegram</div><div class="sub">Личное пространство</div></div><button class="icon-btn" onclick="openScreen('profile')">◉</button></div>
+   <div class="tabs"><button class="tab active" data-tg="chats">Чаты</button><button class="tab" data-tg="channels">Каналы</button><button class="tab" data-tg="myprofile">Мой профиль</button></div>
+   <div id="tgChats"></div><div id="tgChannels" style="display:none"></div><div id="tgMyProfile" style="display:none"></div>
+   <div id="chatPane" class="chat-view"><div class="header"><button class="icon-btn" onclick="closeChat()">‹</button><div style="flex:1"><b id="chatName">Чат</b><div class="sub">Личная переписка</div></div></div><div id="chatMessages"></div><div class="chat-input"><input id="chatInput" class="field" placeholder="Сообщение…"><button class="primary" onclick="sendChat()">➤</button></div></div>
+   <div id="channelPane" class="chat-view"><div class="header"><button class="icon-btn" onclick="closeChannel()">‹</button><div style="flex:1"><b id="channelName">Канал</b><div class="sub">Публикации канала</div></div></div><div id="channelPosts"></div></div>
+  </section>
 
- <section class="view" id="events">
-  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Events</h2><div class="sub">События твоего мира</div></div></div>
-  <div class="tile"><div class="muted small">СЕГОДНЯ · 16:30</div><h3>Небольшая прогулка</h3><p class="muted">В ленте появилось новое сообщение. Загляни к друзьям и узнай, что случилось.</p></div>
-  <div class="tile"><div class="muted small">СКОРО</div><h3>Новые истории</h3><p class="muted">События и совместные активности будут расширены в следующих версиях.</p></div>
- </section>
+  <section class="screen" id="events">
+   <div class="header"><div><div class="head-title">События</div><div class="sub">Случайные моменты твоего мира</div></div><span class="tiny muted" id="eventState">Ожидание события</span></div>
+   <div class="card"><b>События появляются неожиданно</b><p class="muted tiny">В этой первой версии случайные ситуации могут появляться, пока приложение открыто. Для событий, которые происходят даже при закрытом приложении, позже понадобится сервер.</p></div>
+   <div id="eventFeed"></div>
+   <div id="scenePane" style="display:none"><div class="scene"><div class="scene-label">ИНТЕРАКТИВНАЯ СЦЕНА</div><h3 id="sceneTitle"></h3><div class="scene-text" id="sceneText"></div><div id="sceneLog"></div><textarea id="sceneInput" class="field" placeholder="Опиши, что делаешь или говоришь…" rows="3"></textarea><div class="compose-row"><button class="primary" onclick="sceneReply()">Ответить</button><button class="secondary" onclick="endScene()">Завершить сцену</button></div></div></div>
+  </section>
 
- <section class="view" id="settings">
-  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Обои</h2><div class="sub">Настрой внешний вид</div></div></div>
-  <div class="tile"><b>Собственное изображение</b><p class="muted small">Выбери фотографию из галереи телефона.</p><label class="upload">Выбрать обои<input type="file" id="wallUpload" accept="image/*"></label></div>
-  <div class="tile"><b>Монохромные темы</b><div style="display:flex;gap:10px;margin-top:14px"><button class="theme" data-theme="dark" style="flex:1;padding:22px;border:1px solid #555;border-radius:15px;background:linear-gradient(135deg,#333,#050505)">Ночь</button><button class="theme" data-theme="silver" style="flex:1;padding:22px;border:1px solid #555;border-radius:15px;background:linear-gradient(135deg,#aaa,#222)">Серебро</button><button class="theme" data-theme="mist" style="flex:1;padding:22px;border:1px solid #555;border-radius:15px;background:linear-gradient(135deg,#666,#999)">Туман</button></div></div>
- </section>
+  <section class="screen" id="photos">
+   <div class="header"><div><div class="head-title">Photos</div><div class="sub">Твоя галерея</div></div></div>
+   <label class="file-label">＋ Добавить фотографии<input id="galleryUpload" type="file" accept="image/*" multiple hidden></label>
+   <div class="photo-grid" id="gallery" style="margin-top:14px"></div><p class="tiny muted">Изображения сохраняются локально в браузере. Не очищай данные сайта, если хочешь их сохранить.</p>
+  </section>
+
+  <section class="screen" id="profile">
+   <div class="header"><div><div class="head-title">Мой профиль</div><div class="sub">Один профиль для Twitter и Telegram</div></div></div>
+   <div class="card">
+    <div class="profile-row"><div class="profile-big" id="profileAvatar">Я</div><div><b id="profileNameView">Ты</b><div class="sub" id="profileHandleView">@you</div></div></div>
+    <div class="section-title">Редактировать профиль</div>
+    <input id="profileName" class="field" placeholder="Имя"><input id="profileHandle" class="field" placeholder="@ник" style="margin-top:8px">
+    <textarea id="profileBio" class="field" rows="3" placeholder="Описание профиля" style="margin-top:8px"></textarea>
+    <label class="file-label" style="display:inline-block;margin-top:8px">Изменить аватар<input id="avatarUpload" type="file" accept="image/*" hidden></label>
+    <div class="compose-row"><button class="primary" onclick="saveProfile()">Сохранить профиль</button></div>
+   </div>
+  </section>
+ </main>
+ <nav class="bottom">
+  <button class="nav active" data-nav="home"><b>⌂</b>Главная</button>
+  <button class="nav" data-nav="twitter"><b>𝕏</b>Twitter</button>
+  <button class="nav" data-nav="telegram"><b>➤</b>Telegram</button>
+  <button class="nav" data-nav="events"><b>✧</b>События</button>
+  <button class="nav" data-nav="profile"><b>◉</b>Профиль</button>
+ </nav>
  <div class="toast" id="toast"></div>
 </div>
 <script>
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-function updateClock(){const d=new Date();$('#clock').textContent=d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});$('#statusTime').textContent=$('#clock').textContent;$('#date').textContent=d.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});}
-updateClock();setInterval(updateClock,30000);
-function openApp(id){$('#home').style.display='none';$$('.view').forEach(v=>v.classList.remove('active'));$('#'+id).classList.add('active')}
-function goHome(){$$('.view').forEach(v=>v.classList.remove('active'));$('#home').style.display='flex'}
-$$('[data-open]').forEach(b=>b.addEventListener('click',()=>openApp(b.dataset.open)));
-$$('[data-home]').forEach(b=>b.addEventListener('click',goHome));
-function toast(t){const el=$('#toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',2200)}
-const savedWall=localStorage.getItem('soulside-wallpaper');if(savedWall)$('#wallpaper').style.backgroundImage=`url("${savedWall}")`;
-$('#wallUpload').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{localStorage.setItem('soulside-wallpaper',r.result);$('#wallpaper').style.backgroundImage=`url("${r.result}")`;toast('Обои обновлены')}catch(err){toast('Изображение слишком большое — выбери другое')}};r.readAsDataURL(f)});
-$$('.theme').forEach(b=>b.onclick=()=>{const themes={dark:'radial-gradient(ellipse at 25% 20%,#454545,transparent 36%),linear-gradient(145deg,#181818,#050505 65%,#242424)',silver:'radial-gradient(ellipse at 25% 20%,#aaa,transparent 36%),linear-gradient(145deg,#777,#171717 65%,#444)',mist:'radial-gradient(ellipse at 25% 20%,#999,transparent 36%),linear-gradient(145deg,#777,#333 65%,#aaa)'};$('#wallpaper').style.backgroundImage=themes[b.dataset.theme];localStorage.removeItem('soulside-wallpaper');toast('Тема изменена')});
-$('#openSuguru').onclick=()=>{$('#conversation').style.display='block';$('#openSuguru').style.display='none'};
-function send(){const input=$('#messageInput'),t=input.value.trim();if(!t)return;const node=document.createElement('div');node.className='bubble mine';node.textContent=t;$('#messages').append(node);input.value='';const arr=JSON.parse(localStorage.getItem('soulside-chat')||'[]');arr.push(t);localStorage.setItem('soulside-chat',JSON.stringify(arr));setTimeout(()=>{const reply=document.createElement('div');reply.className='bubble theirs';reply.textContent='Понимаю. Расскажешь об этом немного подробнее?';$('#messages').append(reply);$('#messages').scrollIntoView({block:'end',behavior:'smooth'})},650)}
-$('#sendMessage').onclick=send;$('#messageInput').addEventListener('keydown',e=>{if(e.key==='Enter')send()});
-const previous=JSON.parse(localStorage.getItem('soulside-chat')||'[]');previous.forEach(t=>{const n=document.createElement('div');n.className='bubble mine';n.textContent=t;$('#messages').append(n)});
-$('#tweetPost').onclick=()=>{const t=$('#tweetInput').value.trim();if(!t)return;const c=document.createElement('div');c.className='card post';const p=document.createElement('p');p.textContent=t;c.append(p);$('#tweets').prepend(c);$('#tweetInput').value='';toast('Публикация добавлена')};
-$('#photoUpload').addEventListener('change',e=>{[...e.target.files].forEach(f=>{const r=new FileReader();r.onload=()=>{const d=document.createElement('div');d.className='photo-cell';const im=document.createElement('img');im.src=r.result;d.append(im);$('#photoGrid').prepend(d)};r.readAsDataURL(f)})});
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const characters=[
+ {id:'suguru',name:'Сугуру Гето',handle:'@suguru',avatar:'悟',bio:'Спокойствие — тоже выбор.',role:'character'},
+ {id:'satoru',name:'Сатору Годжо',handle:'@satoru',avatar:'五',bio:'Самый сильный? Возможно.',role:'character'},
+ {id:'shoko',name:'Сёко Иэири',handle:'@shoko',avatar:'硝',bio:'Кофе сначала. Остальное потом.',role:'character'},
+ {id:'nanami',name:'Кэнто Нанами',handle:'@nanami',avatar:'七',bio:'Рабочее время должно заканчиваться.',role:'character'},
+ {id:'yuji',name:'Юдзи Итадори',handle:'@yuji',avatar:'悠',bio:'Хороший день начинается с хороших людей.',role:'character'},
+ {id:'megumi',name:'Мэгуми Фусигуро',handle:'@megumi',avatar:'恵',bio:'Не люблю лишний шум.',role:'character'},
+ {id:'nobara',name:'Нобара Кугисаки',handle:'@nobara',avatar:'釘',bio:'У меня отличный вкус. Это факт.',role:'character'},
+ {id:'mika',name:'Мика',handle:'@mika_daily',avatar:'M',bio:'Собираю маленькие радости.',role:'person'},
+ {id:'ren',name:'Рэн',handle:'@ren_note',avatar:'R',bio:'Музыка, город и случайные мысли.',role:'person'}
+];
+const initialPosts=[
+ ['suguru','Иногда полезно просто остановиться и посмотреть, что происходит вокруг. Не каждый день должен быть наполнен важными событиями.','12 мин назад'],
+ ['satoru','Купил сладкое. Нет, делиться не планирую. Хотя… посмотрим.','25 мин назад'],
+ ['shoko','Кофе сегодня явно выполняет за меня половину работы.','41 мин назад'],
+ ['nanami','Напоминание: выходные существуют не просто так.','1 ч назад'],
+ ['mika','Нашла маленькую кофейню по дороге домой. Там играет очень хорошая музыка.','2 ч назад'],
+ ['yuji','Кто-нибудь знает место с действительно хорошими онигири?','3 ч назад']
+].map((p,i)=>({id:'seed'+i,author:p[0],text:p[1],time:p[2],likes: i*3+4,comments:[],liked:false,photo:''}));
+let posts=JSON.parse(localStorage.getItem('ss-posts')||'null')||initialPosts;
+let chats=JSON.parse(localStorage.getItem('ss-chats')||'{}');
+let profile=JSON.parse(localStorage.getItem('ss-profile')||'null')||{name:'Ты',handle:'@you',bio:'',avatar:''};
+let activeChat=null,activeChannel=null,currentFeed='all',currentScene=null,sceneHistory=[];
+const channelPosts={
+ suguru:[['Сегодня нашёл тихое место, где почти не бывает людей. Оставлю его здесь — вдруг кому-то тоже захочется немного тишины.','☕'],['Иногда лучшее завершение дня — чай и хорошая книга.','📖']],
+ satoru:[['Кто-нибудь напомнит, почему я опять купил столько сладостей? Ладно, вопрос риторический.','🍡']],
+ shoko:[['Наконец-то выдалась спокойная смена. Почти не верится.','☕']],
+ nanami:[['Редкий вечер без срочных дел. Ценю такие вещи.','🌆']],
+ yuji:[['Сегодня попробовал новое место с лапшой. Вердикт: обязательно вернусь!','🍜']],
+ megumi:[['На улице сегодня удивительно спокойно. Хорошая погода для прогулки.','🌿']],
+ nobara:[['Нашла классную витрину. Просто оставлю это здесь.','🛍️']]
+};
+function save(){localStorage.setItem('ss-posts',JSON.stringify(posts));localStorage.setItem('ss-chats',JSON.stringify(chats));}
+function toast(t){let e=$('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2100)}
+function person(id){return id==='me'?{id:'me',name:profile.name,handle:profile.handle,avatar:profile.avatar||'Я',bio:profile.bio}:characters.find(x=>x.id===id)||characters[0]}
+function avatarHTML(p,cls='avatar'){return `<div class="${cls}">${p.avatar&&p.avatar.startsWith('data:')?`<img src="${p.avatar}">`:esc(p.avatar||p.name[0])}</div>`}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function openScreen(id){$$('.screen').forEach(x=>x.classList.toggle('active',x.id===id));$$('.nav').forEach(x=>x.classList.toggle('active',x.dataset.nav===id));if(id==='twitter')renderFeed();if(id==='telegram')renderTelegram();if(id==='profile')renderProfile();if(id==='events')renderEvents()}
+$$('[data-nav]').forEach(b=>b.onclick=()=>openScreen(b.dataset.nav));
+function renderFeed(){let arr=posts.filter(p=>currentFeed==='all'||(currentFeed==='mine'?p.author==='me':p.author!=='me'));$('#feed').innerHTML=arr.map(p=>{let a=person(p.author);return `<article class="card"><div class="post-top">${avatarHTML(a)}<div><div class="name">${esc(a.name)}</div><div class="handle">${esc(a.handle)} · ${esc(p.time)}</div></div></div><div class="post-text">${esc(p.text)}</div>${p.photo?`<img class="post-image" src="${p.photo}">`:''}<div class="actions"><button class="action ${p.liked?'liked':''}" onclick="likePost('${p.id}')">♡ ${p.likes}</button><button class="action" onclick="commentPost('${p.id}')">◯ ${p.comments.length} · Ответить</button><button class="action" onclick="repost('${p.id}')">↗ Репост</button></div>${p.comments.map(c=>`<div class="tiny" style="padding:8px 0 0 8px;color:#ccc"><b>${esc(c.name)}:</b> ${esc(c.text)}</div>`).join('')}</article>`}).join('')||'<div class="empty">Пока здесь тихо. Напиши первую публикацию.</div>'}
+$$('[data-feed]').forEach(b=>b.onclick=()=>{currentFeed=b.dataset.feed;$$('[data-feed]').forEach(x=>x.classList.toggle('active',x===b));renderFeed()});
+let postImage='';$('#postPhoto').onchange=e=>{let f=e.target.files[0];if(!f)return;readImage(f,d=>{postImage=d;$('#photoName').textContent='Фото добавлено'})};
+function createPost(){let t=$('#postText').value.trim();if(!t&&!postImage)return;posts.unshift({id:'p'+Date.now(),author:'me',text:t,time:'только что',likes:0,comments:[],liked:false,photo:postImage});$('#postText').value='';postImage='';$('#photoName').textContent='';save();renderFeed();toast('Публикация появилась в ленте')}
+function likePost(id){let p=posts.find(x=>x.id===id);if(!p)return;p.liked=!p.liked;p.likes+=p.liked?1:-1;save();renderFeed()}
+function commentPost(id){let t=prompt('Твой комментарий:');if(!t?.trim())return;let p=posts.find(x=>x.id===id);p.comments.push({name:profile.name,text:t.trim()});save();renderFeed();toast('Комментарий добавлен')}
+function repost(id){let p=posts.find(x=>x.id===id);posts.unshift({...p,id:'r'+Date.now(),author:'me',text:'↗ Репост: '+p.text,comments:[],likes:0,liked:false,time:'только что'});save();renderFeed();toast('Добавлено в твои публикации')}
+function readImage(file,cb){let r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(file)}
+function renderTelegram(){renderChats();renderChannels();renderMyProfile()}
+function renderChats(){$('#tgChats').style.display='block';$('#tgChannels').style.display='none';$('#tgMyProfile').style.display='none';$('#chatPane').classList.remove('active');$('#channelPane').classList.remove('active');$('#tgChats').innerHTML=characters.map(c=>`<button class="chat-row" onclick="openChat('${c.id}')">${avatarHTML(c)}<div style="flex:1"><b>${c.name}</b><div class="tiny muted">${esc((chats[c.id]||[]).slice(-1)[0]?.text||'Открыть переписку')}</div></div>›</button>`).join('')}
+function renderChannels(){$('#tgChannels').innerHTML=characters.map(c=>`<button class="channel-row" onclick="openChannel('${c.id}')">${avatarHTML(c)}<div style="flex:1"><b>${c.name}</b><div class="tiny muted">Личный канал · ${channelPosts[c.id]?.length||1} публикаций</div></div>›</button>`).join('')}
+function renderMyProfile(){$('#tgMyProfile').innerHTML=`<div class="card"><div class="profile-row">${avatarHTML(person('me'),'profile-big')}<div><b>${esc(profile.name)}</b><div class="sub">${esc(profile.handle)}</div><div class="tiny muted">${esc(profile.bio)}</div></div></div><button class="secondary" style="margin-top:14px" onclick="openScreen('profile')">Изменить профиль</button></div>`}
+$$('[data-tg]').forEach(b=>b.onclick=()=>{let v=b.dataset.tg;$$('[data-tg]').forEach(x=>x.classList.toggle('active',x===b));$('#tgChats').style.display=v==='chats'?'block':'none';$('#tgChannels').style.display=v==='channels'?'block':'none';$('#tgMyProfile').style.display=v==='myprofile'?'block':'none';$('#chatPane').classList.remove('active');$('#channelPane').classList.remove('active')});
+function openChat(id){activeChat=id;$('#chatName').textContent=person(id).name;$('#tgChats').style.display=$('#tgChannels').style.display=$('#tgMyProfile').style.display='none';$('#chatPane').classList.add('active');renderChatMessages()}
+function renderChatMessages(){let arr=chats[activeChat]||[{from:'them',text:'Привет. Как проходит твой день?'}];$('#chatMessages').innerHTML=arr.map(m=>`<div class="bubble ${m.from==='me'?'mine':''}">${esc(m.text)}</div>`).join('')}
+function sendChat(){let t=$('#chatInput').value.trim();if(!t||!activeChat)return;chats[activeChat]=chats[activeChat]||[{from:'them',text:'Привет. Как проходит твой день?'}];chats[activeChat].push({from:'me',text:t});$('#chatInput').value='';let id=activeChat;save();renderChatMessages();setTimeout(()=>{if(activeChat!==id)return;let replies={suguru:'Понимаю. Иногда полезно проговорить мысли вслух. Что именно тебя заинтересовало?',satoru:'О, вот это уже интересно. Рассказывай подробнее.',shoko:'Звучит знакомо. Надеюсь, день у тебя проходит спокойно.',nanami:'Понял. Давай разберёмся без лишней спешки.',yuji:'Правда? Здорово! И что было дальше?',megumi:'Ясно. Думаю, стоит посмотреть на ситуацию внимательнее.',nobara:'Ну и ну. Ладно, рассказывай всё.'};chats[id].push({from:'them',text:replies[id]||'Расскажешь об этом подробнее?'});save();renderChatMessages();},700)}
+function closeChat(){activeChat=null;$('#chatPane').classList.remove('active');renderTelegram()}
+function openChannel(id){activeChannel=id;let c=person(id);$('#channelName').textContent=c.name+' · канал';$('#tgChats').style.display=$('#tgChannels').style.display=$('#tgMyProfile').style.display='none';$('#channelPane').classList.add('active');let arr=channelPosts[id]||[['Небольшая заметка из сегодняшнего дня.','✧']];$('#channelPosts').innerHTML=arr.map(x=>`<div class="card"><div class="tiny muted">КАНАЛ · ${esc(c.name)}</div><div class="post-text">${esc(x[0])}</div><div style="font-size:25px">${x[1]}</div></div>`).join('')}
+function closeChannel(){activeChannel=null;$('#channelPane').classList.remove('active');renderTelegram()}
+function renderProfile(){$('#profileName').value=profile.name;$('#profileHandle').value=profile.handle;$('#profileBio').value=profile.bio;$('#profileNameView').textContent=profile.name;$('#profileHandleView').textContent=profile.handle;$('#profileAvatar').innerHTML=profile.avatar?`<img src="${profile.avatar}">`:'Я'}
+$('#avatarUpload').onchange=e=>{let f=e.target.files[0];if(f)readImage(f,d=>{profile.avatar=d;renderProfile()})};
+function saveProfile(){profile.name=$('#profileName').value.trim()||'Ты';profile.handle=$('#profileHandle').value.trim()||'@you';if(!profile.handle.startsWith('@'))profile.handle='@'+profile.handle;profile.bio=$('#profileBio').value.trim();localStorage.setItem('ss-profile',JSON.stringify(profile));renderProfile();renderTelegram();renderFeed();toast('Профиль сохранён')}
+$('#galleryUpload').onchange=e=>{[...e.target.files].forEach(f=>readImage(f,d=>{let img=document.createElement('img');img.src=d;$('#gallery').prepend(img)}))};
+const eventTemplates=[
+ {title:'Неожиданное сообщение',who:'suguru',text:'Сугуру прислал тебе сообщение: «Я тут вспомнил одну вещь и подумал, что тебе будет интересно».',scene:'Сугуру стоит у окна небольшого кафе. Заметив тебя, он слегка кивает. «Хорошо, что ты пришла. Я хотел показать тебе одно место неподалёку».',kind:'scene'},
+ {title:'Спонтанная прогулка',who:'yuji',text:'Юдзи пишет, что нашёл интересное место в городе и зовёт тебя прогуляться.',scene:'Юдзи уже ждёт у входа в парк. «Я случайно нашёл здесь классную дорожку. Пойдём посмотрим?»',kind:'scene'},
+ {title:'Фото в канале',who:'shoko',text:'Сёко опубликовала фотографию вечернего неба и короткую заметку о спокойном вечере.',kind:'notice'},
+ {title:'Мем от Годжо',who:'satoru',text:'Годжо отметил тебя в смешной публикации и добавил: «Это почему-то напомнило мне тебя».',kind:'notice'},
+ {title:'Небольшая просьба',who:'nanami',text:'Нанами спрашивает, не поможешь ли ты выбрать книгу для следующего выходного.',scene:'Нанами держит в руках две книги. «Мне нужна объективная оценка. Какую из них ты бы выбрала?»',kind:'scene'},
+ {title:'Встреча знакомых',who:'nobara',text:'Нобара пишет, что собирается заглянуть в новое место и предлагает составить компанию.',scene:'Нобара уже изучает витрину и оборачивается к тебе: «Ну что, как тебе это место?»',kind:'scene'},
+ {title:'Вопрос от Мэгуми',who:'megumi',text:'Мэгуми присылает короткое сообщение с вопросом о твоём мнении.',scene:'Мэгуми показывает тебе фотографию найденного кота. «Он здесь уже минут десять. Кажется, ждёт кого-то».',kind:'scene'}
+];
+let lastEventAt=Date.now(),eventTimer=null;
+function addEvent(ev){let c=person(ev.who),node=document.createElement('div');node.className='card';node.innerHTML=`<div class="post-top">${avatarHTML(c)}<div><b>${esc(ev.title)}</b><div class="tiny muted">${esc(c.name)} · только что</div></div></div><p class="post-text">${esc(ev.text)}</p>${ev.kind==='scene'?`<button class="primary" onclick="startScene(${JSON.stringify(ev).replace(/"/g,'&quot;')})">Открыть событие</button>`:''}`;$('#eventFeed').prepend(node);$('#homeNotice').textContent=ev.title+' — '+c.name+' появился новый момент.';toast('Новое событие: '+ev.title)}
+function renderEvents(){}
+function startScene(ev){currentScene=ev;sceneHistory=[];$('#scenePane').style.display='block';$('#sceneTitle').textContent=ev.title;$('#sceneText').textContent=ev.scene;$('#sceneLog').innerHTML='';$('#sceneInput').value='';$('#scenePane').scrollIntoView({behavior:'smooth'})}
+function sceneReply(){let t=$('#sceneInput').value.trim();if(!t)return;sceneHistory.push('Ты: '+t);let reply='Он внимательно слушает и отвечает: «Пожалуй, ты права. А что предлагаешь дальше?»';if(currentScene.who==='suguru')reply='Сугуру слегка улыбается: «Интересная мысль. Расскажи, почему ты так решила?»';if(currentScene.who==='yuji')reply='Юдзи оживлённо кивает: «Тогда давай попробуем! Думаю, будет здорово».';
+sceneHistory.push(person(currentScene.who).name+': '+reply);$('#sceneLog').innerHTML=sceneHistory.map(x=>`<div class="bubble">${esc(x)}</div>`).join('');$('#sceneInput').value='';}
+function endScene(){$('#scenePane').style.display='none';currentScene=null;toast('Сцена завершена')}
+function scheduleRandom(){clearTimeout(eventTimer);let delay=45000+Math.random()*90000;eventTimer=setTimeout(()=>{if(document.visibilityState==='visible'){let ev=eventTemplates[Math.floor(Math.random()*eventTemplates.length)];addEvent(ev);lastEventAt=Date.now()}scheduleRandom()},delay)}
+scheduleRandom();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&Date.now()-lastEventAt>120000){addEvent(eventTemplates[Math.floor(Math.random()*eventTemplates.length)]);lastEventAt=Date.now()}});
+function tick(){$('#clock').textContent=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})}tick();setInterval(tick,30000);
+renderFeed();renderTelegram();renderProfile();
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
 </body></html>
