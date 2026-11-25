@@ -1,0 +1,11 @@
+{
+  "name": "SOULSIDE",
+  "short_name": "SOULSIDE",
+  "description": "Твой маленький цифровой мир",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#090909",
+  "theme_color": "#090909",
+  "orientation": "portrait",
+  "icons": []
+}

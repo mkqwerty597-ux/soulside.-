@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="SOULSIDE — твой маленький цифровой мир">
+<link rel="manifest" href="manifest.webmanifest">
+<title>SOULSIDE</title>
+<style>
+:root{--bg:#090909;--panel:rgba(20,20,20,.82);--panel2:#1b1b1b;--line:rgba(255,255,255,.11);--muted:#999;--white:#f7f7f7;--radius:25px}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050505;color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+body{min-height:100svh;display:flex;justify-content:center;overflow-x:hidden}
+button,input,textarea{font:inherit}button{color:inherit;cursor:pointer}
+.phone{position:relative;width:min(100%,480px);min-height:100svh;overflow:hidden;background:linear-gradient(145deg,#202020,#080808 52%,#151515);isolation:isolate}
+.wallpaper{position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at 25% 20%,#454545 0,transparent 36%),radial-gradient(ellipse at 80% 75%,#292929 0,transparent 40%),linear-gradient(145deg,#181818,#050505 65%,#242424);background-size:cover;background-position:center;transition:background .25s}
+.wallpaper:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.44))}
+.status{height:38px;padding:10px 23px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:650;letter-spacing:.2px;position:relative;z-index:3}
+.status-right{display:flex;gap:7px;align-items:center}.signal{font-size:13px}
+.screen{position:relative;min-height:calc(100svh - 38px);padding:18px 22px 30px;display:flex;flex-direction:column}
+.topline{display:flex;align-items:center;justify-content:space-between;margin:3px 0 23px}
+.brand{font-size:13px;letter-spacing:4px;font-weight:750}.avatar{width:35px;height:35px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:15px}
+.clock{font-size:clamp(48px,14vw,70px);font-weight:250;letter-spacing:-3px;line-height:1;margin:12px 0 4px}
+.date{font-size:13px;color:#d0d0d0;margin-bottom:34px}
+.widget{border:1px solid var(--line);background:rgba(15,15,15,.34);backdrop-filter:blur(22px);border-radius:21px;padding:14px 16px;margin-bottom:28px}
+.widget-head{display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.4px;color:#ddd}.widget p{font-size:13px;color:#c8c8c8;margin:9px 0 0;line-height:1.45}
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px 13px;margin-top:5px}
+.app{border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.app-icon{width:59px;height:59px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#f5f5f5,#bcbcbc);color:#111;font-size:25px;box-shadow:0 9px 22px #0007,inset 0 1px 0 #fff}
+.app:nth-child(2) .app-icon{background:linear-gradient(145deg,#353535,#111);color:#fff;border:1px solid #666}
+.app:nth-child(3) .app-icon{background:linear-gradient(145deg,#e7e7e7,#777);color:#111}
+.app:nth-child(4) .app-icon{background:linear-gradient(145deg,#292929,#050505);color:#fff;border:1px solid #555}
+.app:nth-child(5) .app-icon,.app:nth-child(6) .app-icon{background:rgba(255,255,255,.14);backdrop-filter:blur(18px);color:#fff;border:1px solid var(--line)}
+.app-name{font-size:11px;color:#f2f2f2;text-shadow:0 1px 5px #000;white-space:nowrap}
+.dock{margin-top:auto;display:flex;justify-content:center;gap:20px;padding:13px 16px;border:1px solid #ffffff1a;background:#ffffff18;backdrop-filter:blur(24px);border-radius:25px}
+.dock span{font-size:10px;color:#ddd}
+.home-indicator{width:108px;height:4px;border-radius:5px;background:#fff;opacity:.85;margin:17px auto 0}
+.view{display:none;position:absolute;inset:38px 0 0;background:#0b0b0b;z-index:5;overflow:auto;padding:18px 18px calc(25px + env(safe-area-inset-bottom))}
+.view.active{display:block;animation:rise .22s ease}
+@keyframes rise{from{opacity:.4;transform:translateY(8px)}to{opacity:1;transform:none}}
+.appbar{display:flex;align-items:center;gap:13px;margin:2px 0 22px}
+.back{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:#ffffff0c;font-size:20px}
+.appbar h2{font-size:20px;margin:0;font-weight:650;letter-spacing:-.4px}.sub{color:var(--muted);font-size:12px;margin-top:3px}
+.card{background:linear-gradient(145deg,#1c1c1c,#111);border:1px solid var(--line);border-radius:20px;padding:15px;margin:12px 0}
+.muted{color:var(--muted)}.small{font-size:12px}.post-head{display:flex;gap:10px;align-items:center}.mini-avatar{width:34px;height:34px;border-radius:50%;background:#333;display:grid;place-items:center}
+.post p{font-size:14px;line-height:1.5;color:#eee}.actions{display:flex;gap:19px;color:#aaa;font-size:12px;margin-top:12px}
+.chat-list{display:flex;flex-direction:column;gap:9px}.chat-row{display:flex;gap:12px;align-items:center;padding:12px;border-radius:17px;background:#171717;border:1px solid var(--line);text-align:left;width:100%}
+.bubble{max-width:84%;padding:12px 14px;border-radius:18px;background:#242424;font-size:14px;line-height:1.45;margin:9px 0}.bubble.mine{margin-left:auto;background:#ededed;color:#111;border-bottom-right-radius:6px}.bubble.theirs{border-bottom-left-radius:6px}
+.chat-area{display:flex;flex-direction:column;min-height:55vh}.composer{display:flex;gap:8px;margin-top:auto;padding-top:14px}.composer input{min-width:0;flex:1;background:#1b1b1b;border:1px solid var(--line);border-radius:22px;padding:12px 14px;color:#fff;outline:none}.send,.primary{border:0;background:#f1f1f1;color:#111;border-radius:20px;padding:0 17px;font-weight:650}
+.tile{border-radius:20px;background:#191919;border:1px solid var(--line);padding:16px;margin:12px 0}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.photo-cell{aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#444,#111);overflow:hidden}.photo-cell img{width:100%;height:100%;object-fit:cover}
+input[type=file]{display:none}.upload{display:inline-flex;padding:11px 14px;border:1px solid var(--line);border-radius:15px;background:#1b1b1b;font-size:13px;margin:6px 0}
+.backdrop{background:#121212;border-radius:20px;padding:20px;text-align:center;border:1px solid var(--line)}
+.toast{position:fixed;top:48px;left:50%;transform:translateX(-50%);background:#eee;color:#111;padding:10px 16px;border-radius:20px;font-size:12px;z-index:10;display:none;box-shadow:0 8px 30px #0008}
+@media(min-width:520px){body{padding:20px 0}.phone{min-height:calc(100svh - 40px);border:1px solid #333;border-radius:36px}.screen{min-height:calc(100svh - 78px)}.view{inset:38px 0 0}}
+</style>
+</head>
+<body>
+<div class="phone">
+ <div class="wallpaper" id="wallpaper"></div>
+ <div class="status"><span id="statusTime">9:41</span><span class="status-right"><span>●</span><span class="signal">▮▮▮</span><span>◔</span><span>▰</span></span></div>
+ <main class="screen" id="home">
+  <div class="topline"><div class="brand">SOULSIDE</div><div class="avatar">✦</div></div>
+  <div class="clock" id="clock">9:41</div><div class="date" id="date">Среда, 25 ноября</div>
+  <div class="widget"><div class="widget-head"><span>ТВОЁ ПРОСТРАНСТВО</span><span>✧</span></div><p>Небольшой цифровой мир, который всегда под рукой.</p></div>
+  <div class="app-grid">
+   <button class="app" data-open="twitter"><span class="app-icon">𝕏</span><span class="app-name">Twitter</span></button>
+   <button class="app" data-open="telegram"><span class="app-icon">➤</span><span class="app-name">Telegram</span></button>
+   <button class="app" data-open="tiktok"><span class="app-icon">♪</span><span class="app-name">TikTok</span></button>
+   <button class="app" data-open="photos"><span class="app-icon">▧</span><span class="app-name">Photos</span></button>
+   <button class="app" data-open="events"><span class="app-icon">✧</span><span class="app-name">Events</span></button>
+   <button class="app" data-open="settings"><span class="app-icon">⚙</span><span class="app-name">Обои</span></button>
+  </div>
+  <div class="dock"><span>SOULSIDE</span><span>•</span><span>ТВОЙ МИР</span></div>
+  <div class="home-indicator"></div>
+ </main>
+
+ <section class="view" id="twitter">
+  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Twitter</h2><div class="sub">Твоя лента</div></div></div>
+  <div class="card post"><div class="post-head"><div class="mini-avatar">悟</div><div><b>Сугуру Гето</b><div class="muted small">@suguru · недавно</div></div></div><p>Иногда полезно просто остановиться и посмотреть, что происходит вокруг. Не каждый день должен быть наполнен важными событиями.</p><div class="actions"><span>♡ 24</span><span>◯ 5</span><span>↗ Поделиться</span></div></div>
+  <div class="card"><b>Написать публикацию</b><textarea id="tweetInput" placeholder="О чём думаешь?" style="width:100%;margin:12px 0;background:#111;border:1px solid #333;border-radius:14px;padding:12px;color:white;min-height:80px"></textarea><button class="primary" id="tweetPost" style="padding:10px 16px">Опубликовать</button></div>
+  <div id="tweets"></div>
+ </section>
+
+ <section class="view" id="telegram">
+  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Telegram</h2><div class="sub">Сообщения</div></div></div>
+  <button class="chat-row" id="openSuguru"><div class="mini-avatar">悟</div><div style="flex:1"><b>Сугуру Гето</b><div class="muted small">Последний раз недавно</div></div><span class="muted">›</span></button>
+  <div id="conversation" style="display:none">
+   <div class="appbar" style="margin-top:18px"><div class="mini-avatar">悟</div><div><b>Сугуру Гето</b><div class="sub">демо-переписка</div></div></div>
+   <div class="chat-area"><div id="messages"><div class="bubble theirs">Привет. Как проходит твой день?</div></div>
+    <div class="composer"><input id="messageInput" placeholder="Сообщение…"><button class="send" id="sendMessage">➤</button></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="view" id="tiktok">
+  <div class="appbar"><button class="back" data-home>‹</button><div><h2>TikTok</h2><div class="sub">Короткие видео · демо</div></div></div>
+  <div class="backdrop" style="min-height:58vh;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 50% 35%,#555,#151515 65%)"><div style="font-size:60px">♪</div><h2>Твоя лента</h2><p class="muted">Здесь позже появятся короткие видео персонажей и друзей.</p><span class="small muted">SOULSIDE · FOR YOU</span></div>
+ </section>
+
+ <section class="view" id="photos">
+  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Photos</h2><div class="sub">Твоя галерея</div></div></div>
+  <label class="upload">＋ Добавить фотографии<input type="file" id="photoUpload" accept="image/*" multiple></label>
+  <div class="photo-grid" id="photoGrid"></div><p class="muted small">Выбранные изображения хранятся в этой версии на устройстве, пока данные браузера не очищены.</p>
+ </section>
+
+ <section class="view" id="events">
+  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Events</h2><div class="sub">События твоего мира</div></div></div>
+  <div class="tile"><div class="muted small">СЕГОДНЯ · 16:30</div><h3>Небольшая прогулка</h3><p class="muted">В ленте появилось новое сообщение. Загляни к друзьям и узнай, что случилось.</p></div>
+  <div class="tile"><div class="muted small">СКОРО</div><h3>Новые истории</h3><p class="muted">События и совместные активности будут расширены в следующих версиях.</p></div>
+ </section>
+
+ <section class="view" id="settings">
+  <div class="appbar"><button class="back" data-home>‹</button><div><h2>Обои</h2><div class="sub">Настрой внешний вид</div></div></div>
+  <div class="tile"><b>Собственное изображение</b><p class="muted small">Выбери фотографию из галереи телефона.</p><label class="upload">Выбрать обои<input type="file" id="wallUpload" accept="image/*"></label></div>
+  <div class="tile"><b>Монохромные темы</b><div style="display:flex;gap:10px;margin-top:14px"><button class="theme" data-theme="dark" style="flex:1;padding:22px;border:1px solid #555;border-radius:15px;background:linear-gradient(135deg,#333,#050505)">Ночь</button><button class="theme" data-theme="silver" style="flex:1;padding:22px;border:1px solid #555;border-radius:15px;background:linear-gradient(135deg,#aaa,#222)">Серебро</button><button class="theme" data-theme="mist" style="flex:1;padding:22px;border:1px solid #555;border-radius:15px;background:linear-gradient(135deg,#666,#999)">Туман</button></div></div>
+ </section>
+ <div class="toast" id="toast"></div>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+function updateClock(){const d=new Date();$('#clock').textContent=d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});$('#statusTime').textContent=$('#clock').textContent;$('#date').textContent=d.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});}
+updateClock();setInterval(updateClock,30000);
+function openApp(id){$('#home').style.display='none';$$('.view').forEach(v=>v.classList.remove('active'));$('#'+id).classList.add('active')}
+function goHome(){$$('.view').forEach(v=>v.classList.remove('active'));$('#home').style.display='flex'}
+$$('[data-open]').forEach(b=>b.addEventListener('click',()=>openApp(b.dataset.open)));
+$$('[data-home]').forEach(b=>b.addEventListener('click',goHome));
+function toast(t){const el=$('#toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',2200)}
+const savedWall=localStorage.getItem('soulside-wallpaper');if(savedWall)$('#wallpaper').style.backgroundImage=`url("${savedWall}")`;
+$('#wallUpload').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{localStorage.setItem('soulside-wallpaper',r.result);$('#wallpaper').style.backgroundImage=`url("${r.result}")`;toast('Обои обновлены')}catch(err){toast('Изображение слишком большое — выбери другое')}};r.readAsDataURL(f)});
+$$('.theme').forEach(b=>b.onclick=()=>{const themes={dark:'radial-gradient(ellipse at 25% 20%,#454545,transparent 36%),linear-gradient(145deg,#181818,#050505 65%,#242424)',silver:'radial-gradient(ellipse at 25% 20%,#aaa,transparent 36%),linear-gradient(145deg,#777,#171717 65%,#444)',mist:'radial-gradient(ellipse at 25% 20%,#999,transparent 36%),linear-gradient(145deg,#777,#333 65%,#aaa)'};$('#wallpaper').style.backgroundImage=themes[b.dataset.theme];localStorage.removeItem('soulside-wallpaper');toast('Тема изменена')});
+$('#openSuguru').onclick=()=>{$('#conversation').style.display='block';$('#openSuguru').style.display='none'};
+function send(){const input=$('#messageInput'),t=input.value.trim();if(!t)return;const node=document.createElement('div');node.className='bubble mine';node.textContent=t;$('#messages').append(node);input.value='';const arr=JSON.parse(localStorage.getItem('soulside-chat')||'[]');arr.push(t);localStorage.setItem('soulside-chat',JSON.stringify(arr));setTimeout(()=>{const reply=document.createElement('div');reply.className='bubble theirs';reply.textContent='Понимаю. Расскажешь об этом немного подробнее?';$('#messages').append(reply);$('#messages').scrollIntoView({block:'end',behavior:'smooth'})},650)}
+$('#sendMessage').onclick=send;$('#messageInput').addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+const previous=JSON.parse(localStorage.getItem('soulside-chat')||'[]');previous.forEach(t=>{const n=document.createElement('div');n.className='bubble mine';n.textContent=t;$('#messages').append(n)});
+$('#tweetPost').onclick=()=>{const t=$('#tweetInput').value.trim();if(!t)return;const c=document.createElement('div');c.className='card post';const p=document.createElement('p');p.textContent=t;c.append(p);$('#tweets').prepend(c);$('#tweetInput').value='';toast('Публикация добавлена')};
+$('#photoUpload').addEventListener('change',e=>{[...e.target.files].forEach(f=>{const r=new FileReader();r.onload=()=>{const d=document.createElement('div');d.className='photo-cell';const im=document.createElement('img');im.src=r.result;d.append(im);$('#photoGrid').prepend(d)};r.readAsDataURL(f)})});
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
